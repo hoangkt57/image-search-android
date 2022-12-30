@@ -1,0 +1,5 @@
+<resources>
+    <dimen name="photo_item_margin">1dp</dimen>
+
+    <integer name="photo_list_span_count">3</integer>
+</resources>

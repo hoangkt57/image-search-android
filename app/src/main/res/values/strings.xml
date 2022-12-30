@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Image Search</string>
+
+    <string name="no_photo">No photo</string>
+    <string name="search_photo">Search for free photos</string>
+
+</resources>

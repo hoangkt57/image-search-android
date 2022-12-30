@@ -1,0 +1,5 @@
+<resources>
+
+    <integer name="photo_list_span_count">5</integer>
+
+</resources>
