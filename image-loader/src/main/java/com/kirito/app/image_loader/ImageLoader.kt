@@ -49,22 +49,26 @@ class ImageLoader {
             canvas.drawColor(placeholder)
             view.setImageBitmap(bmp)
             activity.lifecycleScope.launch(Dispatchers.IO) {
-                val originalFileName = detectFileName(url)
-                val file = File(activity.cacheDir, "$id/$originalFileName")
-                if (!file.exists()) {
-                    file.parentFile?.mkdirs()
-                    ImageDownloader.downloadImage(file, url)
-                }
-                val resizeFile = File(activity.cacheDir, fileName)
-                if (!resizeFile.exists()) {
-                    resizeFile.parentFile?.mkdirs()
-                    resizeFile(file, resizeFile, size)
-                }
-                val bitmap = BitmapFactory.decodeStream(resizeFile.inputStream())
-                withContext(Dispatchers.Main) {
-                    if (view.tag == fileName) {
-                        view.setImageBitmap(bitmap)
+                try {
+                    val originalFileName = detectFileName(url)
+                    val file = File(activity.cacheDir, "$id/$originalFileName")
+                    if (!file.exists()) {
+                        file.parentFile?.mkdirs()
+                        ImageDownloader.downloadImage(file, url)
                     }
+                    val resizeFile = File(activity.cacheDir, fileName)
+                    if (!resizeFile.exists()) {
+                        resizeFile.parentFile?.mkdirs()
+                        resizeFile(file, resizeFile, size)
+                    }
+                    val bitmap = BitmapFactory.decodeStream(resizeFile.inputStream())
+                    withContext(Dispatchers.Main) {
+                        if (view.tag == fileName) {
+                            view.setImageBitmap(bitmap)
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "execute", e)
                 }
             }
         } catch (e: Exception) {
